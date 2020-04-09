@@ -117,3 +117,6 @@ Outputs:
   # MlFlowURL:
   #   Description: URL for MlFlow Experiment DashboardURL
   #   Value: !GetAtt MlFlowDeployment.Outputs.Endpoint
+  WebHookApi:
+    Description: GitHub Webhook endpoint.
+    Value: !GetAtt Webhook.Outputs.ZipDownloadWebHookApi
