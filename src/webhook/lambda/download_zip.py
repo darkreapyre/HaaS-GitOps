@@ -1,5 +1,8 @@
 import boto3
-from botocore.vendored import requests
+try:
+    import requests #Python3
+except ImportError:
+    from botocore.vendored import requests #Python2
 import logging
 import base64
 import os
@@ -153,7 +156,7 @@ def lambda_handler(event, context):
     # download the code archive via archive url
     logger.info('Downloading archive from %s' % archive_url)
     r = requests.get(archive_url, verify=verify, headers=headers, params=params)
-    # f = StringIO(r.content)
+    # f = StringIO(r.content) #Python2
     f = BytesIO(r.content)
     zip = ZipFile(f)
     path = '/tmp/code'

@@ -592,7 +592,7 @@ Resources:
       # Code:
       #   S3Bucket: !Ref 'LambdaZipsBucket'
       #   S3Key: !Sub '${QSS3KeyPrefix}functions/packages/ZipDl/lambda.zip'
-      Runtime: python2.7
+      Runtime: python3.6
       MemorySize: 128
       Timeout: 30
       VpcConfig: !If
