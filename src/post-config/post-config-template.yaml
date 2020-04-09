@@ -15,14 +15,6 @@ Parameters:
     Description: >
       StateMachine ARN for the SageMaker training platofrm.
     Type: String
-  # EksStateMachine:
-  #   Description: >
-  #     StateMachine ARN for the SageMaker training platofrm.
-  #   Type: String
-  # AmiMakerStateMachine:
-  #   Description: >
-  #     StateMachine ARN for the SageMaker training platofrm.
-  #   Type: String
 
 Resources:
   ExecuteStateMachineFunction:
@@ -36,8 +28,6 @@ Resources:
       Environment:
         Variables:
           SageMaker_ARN: !Ref SageMakerStateMachine
-          # EKS_ARN: !Ref EksMakerStateMachine
-          # AMI_ARN: !Ref AmiStateMachine
       Policies:
         - AWSLambdaBasicExecutionRole
         - Version: "2012-10-17"
