@@ -1,5 +1,5 @@
 {
-    "Model_Name": "",
+    "Model_Name": "Testing",
     "Version": "", // single integer
     "Description": "Experiment created on ${DATE} at ${TIME}.",
     "Platform": "sagemaker", // List of sagemaker, dlami, eks (Added by Front-End form)
