@@ -22,6 +22,11 @@ if [ "$Dataset_Name" == "coco" ]; then
 
     aws s3 cp --recursive $STAGE_DIR/coco s3://$Experiment_Bucket/$Experiment_Prefix/training_data
 
+    # cd $STAGE_DIR
+    # wget -O ./model.h5 https://github.com/fizyr/keras-retinanet/releases/download/0.5.1/resnet50_coco_best_v2.1.0.h5
+    # tar cvfz ./model.tar.gz ./model.h5
+    # aws s3 cp ./model.tar.gz s3://$Experiment_Bucket/$Experiment_Prefix/pre-trained_model/model.tar.gz
+
 elif [ "$Dataset_Name" == "fashion" ]; then
     echo "Downloading Fashion-MNIST dataset"
     mkdir -p $STAGE_DIR/fashion

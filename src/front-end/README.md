@@ -43,8 +43,8 @@ In order to test the solution locally before deployment, use the following steps
 1. Ensure `virtualenv` is loaded (for the [Mac](https://sourabhbajaj.com/mac-setup/Python/virtualenv.html)).
 2. Get the name of the S3 Bucket that was created by the ML Workflow "backend" and add it to `application.py`. For Example:
 ```bash
-    export S3_BUCKET=<S3 TEST Bucket>
-    export DASHBOARD_URL=http://127.0.0.1
+    S3_BUCKET=<S3 TEST Bucket>
+    DASHBOARD_URL=http://127.0.0.1
 ```
 3. Setup Python 3 virtual environment:
 ```bash

@@ -7,7 +7,7 @@
     <meta name="description" content="MlOps-as-a-Service Experiment Console">
     <meta name="author" content="darkreapyre@gmail.com">
     <link rel="icon" href="">
-    <title>Welcome to the MMP Console</title>
+    <title>Welcome to the Amazon MMP Console</title>
     <link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/jumbotron.css') }}" rel="stylesheet">
   </head>
@@ -21,23 +21,54 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#"><b>MMP Console</b></a>
+          <a class="navbar-brand" href="#"><b>Amazon MMP Console</b></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <div class="navbar-header navbar-right">
-            <a class="btn btn-info btn-lg" href="{{ dashboard }}" role="button" target="_blank">Experiment Dasboard</a>
+            <a class="btn btn-primary" href="{{ dashboard }}" role="button" target="_blank">Experiment Dasboard</a>
           </div>
       </div>
     </nav>
     <div class="jumbotron">
       <div class="container">
-        <h1>Managed MlOps Pipeline (MMP)</h1>
-        <p>The MMP solution allows you to create Machine Learning Experiments by leveraging an AWS managed MlOps Pipeline to train Machine Learning models at scale.</p>
-        <p>To address your <strong>complexity</strong>, <strong>cost</strong>, and <strong>span of control</strong> requirements, the Amazon MMP service leverages a selection of back-end training frameworks, such as Amazon SageMaker, allowing you the flexibility to choose the right model training solution to fit your business objectives.</p>
+        <h1>Amazon Managed MlOps Pipeline (Amazon MMP)</h1>
+        <p>The Amazon MMP solution allows you to create Machine Learning Experiments by leveraging an AWS managed MlOps Pipeline to train Machine Learning models at scale.</p>
+        <p>To address your <strong>complexity</strong>, <strong>cost</strong>, and <strong>span of control</strong> requirements, the Amazon MMP service leverages a selection of back-end training frameworks, such as Amazon SageMaker, Amazon EKS and the AWS Deep Learning AMIs, allowing you the flexibility to choose the right model training solution to fit your business objectives.</p>
         <p>The service further allows you manage these experiments through an Experiment Dashboard and makes it easier for you analyze each trained machine learning model and compare them individually, before deploying the best one into production.</p>
-        <p><a class="btn btn-info btn-lg" href="{{ url_for('create_experiment') }}" role="button">Create Experiment &raquo;</a></p>
+        <p><a class="btn btn-info btn-lg" href="#" role="button">Learn More &raquo;</a></p>
       </div>
     </div>
 
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h2>Amazon SageMaker</h2>
+          <p>Amazon SageMaker provides every developer and data scientist with the ability to build, train, and deploy machine learning models quickly.</p>
+          <p>Amazon SageMaker is a fully-managed service that covers the entire machine learning workflow to label and prepare your data, choose an algorithm, train the model, tune and optimize it for deployment, make predictions, and take action.</p>
+          <p>Your models get to production faster with much less effort and lower cost.</p>
+          <p><a class="btn btn-primary" href="{{ url_for('create_sm_experiment') }}" role="button">Create Experiment &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+          <h2>Amazon EKS</h2>
+          <p>Amazon Elastic Container Service for Kubernetes (Amazon EKS) makes it easy to deploy, manage, and scale containerized applications using Kubernetes on AWS.</p>
+          <p>Amazon EKS runs the Kubernetes management infrastructure for you across multiple AWS availability zones to eliminate a single point of failure. Amazon EKS is certified Kubernetes conformant so you can use existing tooling and plugins from partners and the Kubernetes community.</p>
+          <p>Applications running on any standard Kubernetes environment are fully compatible and can be easily migrated to Amazon EKS.</p>
+          <p><a class="btn btn-primary" href="{{ url_for('create_eks_experiment') }}" role="button">Create Experiment &raquo;</a></p>
+       </div>
+        <div class="col-md-4">
+          <h2>AWS Deep Learning AMIs</h2>
+          <p>The AWS Deep Learning AMIs provide machine learning practitioners and researchers with the infrastructure and tools to accelerate deep learning in the cloud, at any scale.</p>
+          <p>You can quickly launch Amazon EC2 instances pre-installed with popular deep learning frameworks and interfaces such as TensorFlow, PyTorch, Apache MXNet, Chainer, Gluon, Horovod, and Keras to train sophisticated, custom AI models, experiment with new algorithms, or to learn new skills and techniques.</p>
+          <p>Whether you need Amazon EC2 GPU or CPU instances, there is no additional charge for the Deep Learning AMIs – you only pay for the AWS resources needed to store and run your applications.</p>
+          <p><a class="btn btn-primary" href="{{ url_for('create_ami_experiment') }}" role="button">Create Experiment &raquo;</a></p>
+        </div>
+      </div>
+
+      <hr>
+
+      <footer>
+        <p>&copy; 2019, Amazon Web Services, Inc. or its affiliates. All rights reserved.</p>
+      </footer>
+    </div>
   </body>
 </html>

@@ -1,17 +1,32 @@
-FROM nvidia/cuda:9.0-devel-ubuntu16.04
+FROM nvidia/cuda:9.0-devel-ubuntu16.04 
 ENV TENSORFLOW_VERSION=1.12.0
 ENV PYTORCH_VERSION=1.2.0
 ENV TORCHVISION_VERSION=0.4.0
 ENV CUDNN_VERSION=7.1.4.18-1+cuda9.0 
 ENV NCCL_VERSION=2.2.13-1+cuda9.0
-ENV MXNET_VERSION=1.5.0
+ENV MXNET_VERSION=1.5.1
 ENV HOROVOD_VERSION=0.18.1
 ENV KERAS_VERSION=2.2.4
+
+# ARG DASHBOARD_URL 
+# ENV DASHBOARD_URL=$DASHBOARD_URL 
+# RUN echo $DASHBOARD_URL 
+ 
+# ARG NUM_GPUS 
+# ENV NUM_GPUS=$NUM_GPUS 
+# RUN echo $NUM_GPUS 
+ 
+# ARG DATASET_NAME 
+# ENV DATASET_NAME=$DATASET_NAME 
+# RUN echo $DATASET_NAME 
+ 
+# ARG EXPERIMENT_NAME 
+# ENV EXPERIMENT_NAME=$EXPERIMENT_NAME 
+# RUN echo $EXPERIMENT_NAME 
  
 RUN apt-get update && apt-get install -y --no-install-recommends --allow-downgrades --allow-change-held-packages \ 
       build-essential \ 
-      cmake \
-      g++-4.8 \
+      cmake \ 
       git \ 
       curl \ 
       vim \ 
@@ -109,14 +124,26 @@ RUN pip3 install pandas==0.24.0
 RUN pip3 install git+https://www.github.com/keras-team/keras-contrib.git
  
 ########################################################################################## 
+# GitHub Training code
+########################################################################################## 
+ 
+# COPY code /tmp/code 
+ 
+# The following should only be run if the GitHub Code requires installation 
+# RUN FILE=/tmp/code/setup.py && if [ -f "$FILE" ]; then cd /tmp/code; pip3 install .; fi
+ 
+########################################################################################## 
 # SageMaker requirements 
 ########################################################################################## 
  
 COPY horovod/launch.py /launch.py 
 COPY horovod/changehostname.c /changehostname.c 
 COPY horovod/change-hostname.sh /usr/local/bin/change-hostname.sh 
+# RUN cp /tmp/code/train.py /train.py 
  
 RUN chmod +x /usr/local/bin/change-hostname.sh 
  
 # SSH login fix. https://docs.docker.com/engine/examples/running_ssh_service/ 
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd 
+
+# ENTRYPOINT ["python3", "/launch.py"]

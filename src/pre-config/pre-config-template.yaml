@@ -155,7 +155,7 @@ Resources:
           - Name: REPOSITORY_URI
             Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${EcrRepository}
       ServiceRole: !Ref CodeBuildServiceRole
-      TimeoutInMinutes: 120
+      TimeoutInMinutes: 60
   CodeBuildServiceRole:
     Type: AWS::IAM::Role
     Properties:

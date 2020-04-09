@@ -27,7 +27,7 @@ Resources:
     Description: Training experiment data.
     DeletionPolicy: Retain
     Properties:
-#      BucketName: !Sub ${AWS::StackName}-training-experiments-${AWS::Region}
+      BucketName: !Sub ${AWS::StackName}-training-experiments-${AWS::Region}
       VersioningConfiguration:
         Status: Enabled
   PreConfig:
@@ -73,6 +73,24 @@ Resources:
        SNSTopic: !Ref SNSTopic
        S3ExperimentBucket: !Ref S3ExperimentBucket
        MasterImage: !GetAtt PreConfig.Outputs.MasterImage
+#  EksMlOps:
+#    Type: AWS::CloudFormation::Stack
+#    Properties:
+#      TemplateURL: !Sub https://s3.amazonaws.com/${S3BootstrapBucket}/templates/eks-mlops-template.yaml
+#      Parameters:
+#       S3BootstrapBucket: !Ref S3BootstrapBucket
+#       SNSTopic: !Ref SNSTopic
+#       S3ExperimentBucket: !Ref S3ExperimentBucket
+#       MasterImage: !GetAtt PreConfig.Outputs.MasterImage
+#  AmiMlOps:
+#    Type: AWS::CloudFormation::Stack
+#    Properties:
+#      TemplateURL: !Sub https://s3.amazonaws.com/${S3BootstrapBucket}/templates/ami-mlops-template.yaml
+#      Parameters:
+#       S3BootstrapBucket: !Ref S3BootstrapBucket
+#       SNSTopic: !Ref SNSTopic
+#       S3ExperimentBucket: !Ref S3ExperimentBucket
+#       MasterImage: !GetAtt PreConfig.Outputs.MasterImage
   PostConfig:
     Type: AWS::CloudFormation::Stack
     Properties:
@@ -81,6 +99,8 @@ Resources:
         S3BootstrapBucket: !Ref S3BootstrapBucket
         S3ExperimentBucket: !Ref S3ExperimentBucket
         SageMakerStateMachine: !GetAtt SageMakerMlOps.Outputs.SageMakerStateMachine
+#        EksStateMachine: !GetAtt EksMlOps.Outputs.EksStateMachine
+#        AmiStatemachine: !GetAtt AmiMlOps.AmiStateMachine
 
 Outputs:
   FrontEndURL:
@@ -90,5 +110,5 @@ Outputs:
     Description: S3 Bucekt container ML Experiment data.
     Value: !Ref S3ExperimentBucket
   MlFlowURL:
-    Description: URL for MlFlow Experiment DashboardURL.
+    Description: URL for MlFlow Experiment DashboardURL
     Value: !GetAtt MlFlowDeployment.Outputs.Endpoint
