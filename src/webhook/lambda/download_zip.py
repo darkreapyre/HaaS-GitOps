@@ -8,7 +8,7 @@ from zipfile import ZipFile
 try:
     from cStringIO import StringIO #Python2
 except ImportError:
-    from io import StringIO #Python3
+    from io import BytesIO #Python3
 try:
     from urlparse import urlparse #Python2
 except ImportError:
@@ -153,7 +153,8 @@ def lambda_handler(event, context):
     # download the code archive via archive url
     logger.info('Downloading archive from %s' % archive_url)
     r = requests.get(archive_url, verify=verify, headers=headers, params=params)
-    f = StringIO(r.content)
+    # f = StringIO(r.content)
+    f = BytesIO(r.content)
     zip = ZipFile(f)
     path = '/tmp/code'
     zipped_code = '/tmp/zipped_code'
