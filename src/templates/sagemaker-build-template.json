@@ -32,10 +32,6 @@
             "Description": "Number of GPUs for Horovod training container",
             "Type": "String"
         },
-        "DashboardURL": {
-            "Description": "MlFlow Tracking API URL",
-            "Type": "String"
-        },
         "DatasetName": {
             "Description": "Name pof the Training Dataset",
             "Type": "String"
@@ -268,7 +264,7 @@
                         "Fn::Sub": "${S3BootstrapBucket}/artifacts/container-src.zip"
                     },
                     "BuildSpec": {
-                        "Fn::Sub": "version: 0.2\nphases:\n  install:\n    runtime-versions:\n      docker: 18\n      python: 3.7\n    commands:\n      - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2&\n      - timeout 15 sh -c \"until docker info; do echo .; sleep 1; done\"\n      - apt-get update && apt-get -y install git\n      - pip install --upgrade awscli\n  pre_build:\n    commands: \n      - printenv\n      - printf \"%s:%s\" \"$REPOSITORY_URI\" \"latest\" > /tmp/build_tag.out\n      - git clone https://github.com/$GITHUB_USER/$GITHUB_REPO code\n  build:\n    commands:\n      - $(aws ecr get-login --no-include-email)\n      - docker build -t \"$(cat /tmp/build_tag.out)\" --build-arg DASHBOARD_URL=$DASHBOARD_URL --build-arg NUM_GPUS=$NUM_GPUS --build-arg DATASET_NAME=$DATASET_NAME --build-arg EXPERIMENT_NAME=$EXPERIMENT_NAME --build-arg MASTER_IMAGE=$MASTER_IMAGE -f Dockerfile .\n  post_build:\n    commands:\n      - docker push \"$(cat /tmp/build_tag.out)\"\n"
+                        "Fn::Sub": "version: 0.2\nphases:\n  install:\n    runtime-versions:\n      docker: 18\n      python: 3.7\n    commands:\n      - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2&\n      - timeout 15 sh -c \"until docker info; do echo .; sleep 1; done\"\n      - apt-get update && apt-get -y install git\n      - pip install --upgrade awscli\n  pre_build:\n    commands: \n      - printenv\n      - printf \"%s:%s\" \"$REPOSITORY_URI\" \"latest\" > /tmp/build_tag.out\n      - git clone https://github.com/$GITHUB_USER/$GITHUB_REPO code\n  build:\n    commands:\n      - $(aws ecr get-login --no-include-email)\n      - docker build -t \"$(cat /tmp/build_tag.out)\" --build-arg NUM_GPUS=$NUM_GPUS --build-arg DATASET_NAME=$DATASET_NAME --build-arg EXPERIMENT_NAME=$EXPERIMENT_NAME --build-arg MASTER_IMAGE=$MASTER_IMAGE -f Dockerfile .\n  post_build:\n    commands:\n      - docker push \"$(cat /tmp/build_tag.out)\"\n"
                     }
                 },
                 "Environment": {
@@ -305,12 +301,6 @@
                             "Name": "NUM_GPUS",
                             "Value": {
                                 "Ref": "NumGPUs"
-                            }
-                        },
-                        {
-                            "Name": "DASHBOARD_URL",
-                            "Value": {
-                                "Ref": "DashboardURL"
                             }
                         },
                         {
