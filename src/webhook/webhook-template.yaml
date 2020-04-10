@@ -57,20 +57,20 @@ Parameters:
       forward slash (/).
     Type: String
 
-  VPCId:
-    Description: Id of the VPC the DL Zip lambda should run in
-    Type: String
-    Default: ''
+  # VPCId:
+  #   Description: Id of the VPC the DL Zip lambda should run in
+  #   Type: String
+  #   Default: ''
 
-  VPCCidrRange:
-    Description: CIDR range of the VPC
-    Type: String
-    Default: ''
+  # VPCCidrRange:
+  #   Description: CIDR range of the VPC
+  #   Type: String
+  #   Default: ''
 
-  SubnetIds:
-    Description: SubnetIds the DL Zip lambda should run in
-    Type: CommaDelimitedList
-    Default: ''
+  # SubnetIds:
+  #   Description: SubnetIds the DL Zip lambda should run in
+  #   Type: CommaDelimitedList
+  #   Default: ''
 
   ScmHostnameOverride:
     Description: Hostname to override the incoming json request with
@@ -95,10 +95,10 @@ Conditions:
     - !Equals
       - !Ref 'OauthSecret'
       - ''
-  ShouldRunInVPC: !Not
-    - !Equals
-      - !Ref 'VPCId'
-      - ''
+  # ShouldRunInVPC: !Not
+  #   - !Equals
+  #     - !Ref 'VPCId'
+  #     - ''
   UsingDefaultBucket: !Equals [!Ref QSS3BucketName, 'aws-quickstart']
 
 Resources:
@@ -143,23 +143,23 @@ Resources:
                 Resource:
                   - arn:aws:logs:*:*:*
 
-  ZipDlLambdaSecurityGroup:
-    Condition: ShouldRunInVPC
-    Type: AWS::EC2::SecurityGroup
-    Properties:
-      GroupDescription: Security Group to allow the lambda to access the git service
-      GroupName: ZipDlLambdaSecurityGroup
-      SecurityGroupEgress:
-        - CidrIp: !Ref 'VPCCidrRange'
-          FromPort: 0
-          IpProtocol: tcp
-          ToPort: 65535
-      SecurityGroupIngress:
-        - CidrIp: !Ref 'VPCCidrRange'
-          FromPort: 0
-          IpProtocol: tcp
-          ToPort: 65535
-      VpcId: !Ref 'VPCId'
+  # ZipDlLambdaSecurityGroup:
+  #   # Condition: ShouldRunInVPC
+  #   Type: AWS::EC2::SecurityGroup
+  #   Properties:
+  #     GroupDescription: Security Group to allow the lambda to access the git service
+  #     GroupName: ZipDlLambdaSecurityGroup
+  #     SecurityGroupEgress:
+  #       - CidrIp: !Ref 'VPCCidrRange'
+  #         FromPort: 0
+  #         IpProtocol: tcp
+  #         ToPort: 65535
+  #     SecurityGroupIngress:
+  #       - CidrIp: !Ref 'VPCCidrRange'
+  #         FromPort: 0
+  #         IpProtocol: tcp
+  #         ToPort: 65535
+  #     VpcId: !Ref 'VPCId'
 
   ZipDlLambda:
     # DependsOn: CopyZips
@@ -172,12 +172,12 @@ Resources:
       Runtime: python3.6
       MemorySize: 128
       Timeout: 30
-      VpcConfig: !If
-        - ShouldRunInVPC
-        - SecurityGroupIds:
-            - !Ref 'ZipDlLambdaSecurityGroup'
-          SubnetIds: !Ref 'SubnetIds'
-        - !Ref 'AWS::NoValue'
+      # VpcConfig: !If
+      #   - ShouldRunInVPC
+      #   - SecurityGroupIds:
+      #       - !Ref 'ZipDlLambdaSecurityGroup'
+      #     SubnetIds: !Ref 'SubnetIds'
+      #   - !Ref 'AWS::NoValue'
       Environment:
         Variables:
           SCM_HOSTNAME_OVERRIDE: !Ref 'ScmHostnameOverride'
