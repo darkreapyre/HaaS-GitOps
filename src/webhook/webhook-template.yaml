@@ -648,8 +648,8 @@ Resources:
     Type: AWS::Lambda::Function
     Properties:
       Handler: download_zip.lambda_handler
-      Layers: 
-        - !FindInMap [RegionMap, !Ref 'AWS::Region', LayerVersionArn]
+      # Layers: 
+      #   - !FindInMap [RegionMap, !Ref 'AWS::Region', LayerVersionArn]
       Role: !GetAtt 'ZipDlRole.Arn'
       Code: lambda/
       # CodeUri: lambda/

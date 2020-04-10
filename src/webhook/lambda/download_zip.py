@@ -1,5 +1,5 @@
 import boto3
-import requests #Python3
+import requests
 import logging
 import base64
 import os
