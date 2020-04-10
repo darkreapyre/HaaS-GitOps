@@ -1,13 +1,7 @@
 {
-    "Model_Name": "Testing without VPC",
-    "Version": "", // single integer
-    "Description": "Experiment created on ${DATE} at ${TIME}.",
-    "Platform": "sagemaker", // List of sagemaker, dlami, eks (Added by Front-End form)
-    "Dataset_Name": "coco", // List of coco, voc, kitti
-    "GitHub_User": "${githubuser}",
-    "GitHub_Repo": "${githubrepo}",
-    "Dashboard_URL": "${dashboard_url}", // Added by Front-End Form
-    "Training_Instance": "ml.p3.16xlarge",
-    "Instance_Count": "2",
+    "Platform": "sagemaker",
+    "Dataset_Name": "fashion",
+    "Training_Instance": "ml.p3.8xlarge",
+    "Instance_Count": "1",
     "Hyperparameters": "{'epochs': '40', 'batch-size': '32'}"
 }
