@@ -90,23 +90,17 @@ echo ""
 
 ########################################################################################################################################################################################################################################
 # Testing Webhook
-aws cloudformation deploy --stack-name $stackname --template-file ./template.yaml --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND --parameter-overrides GitToken=$token S3BootstrapBucket=$bootstrap_bucket --region $region
+aws cloudformation deploy --stack-name $stackname --template-file ./deployment-template.yaml --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND --parameter-overrides GitToken=$token S3BootstrapBucket=$bootstrap_bucket --region $region
 ########################################################################################################################################################################################################################################
 
 
 # dashboard_url=$(aws cloudformation describe-stacks --stack-name $stackname --query "Stacks[0].Outputs[?OutputKey=='MlFlowURL'].OutputValue" --output text --region $region)
-# cat > ./staging/experiment_config.json <<EOF
-# {
-#     "Model_Name": "",
-#     "Version": "",
-#     "Description": "Experiment created on ${DATE} at ${TIME}.",
-#     "Platform": "sagemaker",
-#     "Dataset_Name": "coco",
-#     "GitHub_User": "darkreapyre",
-#     "GitHub_Repo": "keras-retinanet",
-#     "Dashboard_URL": "${dashboard_url}",
-#     "Training_Instance": "ml.p3.16xlarge",
-#     "Instance_Count": "2",
-#     "Hyperparameters": "{'epochs': '50', 'batch-size': '1', 'steps': '10000', 'backbone': 'resnet50'}"
-# }
-# EOF
+cat > ./staging/experiment.json <<EOF
+{
+    "Platform": "sagemaker",
+    "Dataset_Name": "fashion",
+    "Training_Instance": "ml.p3.8xlarge",
+    "Instance_Count": "1",
+    "Hyperparameters": "{'epochs': '40', 'batch-size': '32'}"
+}
+EOF

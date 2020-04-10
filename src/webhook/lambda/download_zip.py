@@ -5,9 +5,10 @@ import base64
 import os
 import shutil
 from zipfile import ZipFile
-from io import BytesIO #Python3
-#import urllib.parse as urlparse #Python3
+from io import BytesIO
 import base64
+import json
+from datetime import datetime
 
 # Set to False to allow self-signed/invalid ssl certificates
 verify = False
@@ -19,6 +20,7 @@ logging.getLogger('boto3').setLevel(logging.ERROR)
 logging.getLogger('botocore').setLevel(logging.ERROR)
 params = None
 s3_client = boto3.client('s3')
+s3 = boto3.resource('s3')
 
 
 def get_members(zip):
@@ -51,8 +53,12 @@ def lambda_handler(event, context):
     logger.info('Event %s', event)
     OAUTH_token = event['context']['git-token']
     OutputBucket = event['context']['output-bucket']
+    ObjectName = 'experiment_config.json'
     headers = {'Authorization': 'token '+OAUTH_token}
     branch = 'master'
+    time_stamp = str(datetime.now()).split(' ')
+    date = time_stamp[0]
+    time = time_stamp[1].replace(':', '-').split('.')[0]
 
     # GitHub specific hostflavor
     archive_url = event['body-json']['repository']['archive_url']
@@ -80,9 +86,28 @@ def lambda_handler(event, context):
     # Write to /tmp dir without any common preffixes
     zip.extractall(path, get_members(zip))
 
-    # Create zip from /tmp dir without any common preffixes
-    s3_archive_file = "%s/%s/%s/%s.zip" % (owner, name, branch, name)
-    shutil.make_archive(zipped_code, 'zip', path)
-    logger.info("Uploading zip to S3://%s/%s" % (OutputBucket, s3_archive_file))
-    s3_client.upload_file(zipped_code + '.zip', OutputBucket, s3_archive_file)
+    ###################################################################################
+    # # Create zip from /tmp dir without any common preffixes
+    # s3_archive_file = "%s/%s/%s/%s.zip" % (owner, name, branch, name)
+    # shutil.make_archive(zipped_code, 'zip', path)
+    # logger.info("Uploading zip to S3://%s/%s" % (OutputBucket, s3_archive_file))
+    # s3_client.upload_file(zipped_code + '.zip', OutputBucket, s3_archive_file)
+    # logger.info('Upload Complete')
+    ###################################################################################
+
+    # Read in `experiment_config.json`
+    with open(os.path.join(path, 'experiment.json'), 'r') as json_file:
+        data = json_file.read()
+    
+    # Parse file and create experiment file upload
+    logger.info('Creating experiment configuration')
+    experiment = json.loads(data)
+    experiment['Model_Name'] = name
+    experiment['Version'] = event['body-json']['after'][0:7]
+    experiment['Description'] = 'Experiment created on {} at {}'.format(date, time)
+    experiment['GitHub_User'] = owner
+    experiment['GitHub_Repo'] = name
+    ObjectJSON = json.dumps(experiment)
+    logger.info('Uploading experiment to S3://%s/' % OutputBucket)
+    s3.Object(OutputBucket, ObjectName).put(Body=ObjectJSON)
     logger.info('Upload Complete')
