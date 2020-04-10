@@ -140,7 +140,7 @@ Resources:
                 - printf "%s:%s" "$REPOSITORY_URI" "latest" > /tmp/build_tag.out
             build:
               commands:
-                - aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 763104351884.dkr.ecr.us-west-2.amazonaws.com
+                - aws ecr get-login --no-include-email --region us-west-2  --registry-ids 763104351884
                 - docker build -t "$(cat /tmp/build_tag.out)" .
             post_build:
               commands:
