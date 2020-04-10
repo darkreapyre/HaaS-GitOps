@@ -22,7 +22,6 @@ def cfn_params(config):
     params.append({'ParameterKey': 'S3BootstrapBucket', 'ParameterValue': bootstrap_bucket})
     params.append({'ParameterKey': 'S3ExperimentBucket', 'ParameterValue': config['Experiment_Bucket']})
     params.append({'ParameterKey': 'NumGPUs', 'ParameterValue': str(gpu_instances.get(config['Training_Instance']))})
-    params.append({'ParameterKey': 'DashboardURL', 'ParameterValue': config['Dashboard_URL']})
     params.append({'ParameterKey': 'DatasetName', 'ParameterValue': config['Dataset_Name']})
     params.append({'ParameterKey': 'ModelPrefix', 'ParameterValue': config['Experiment_Prefix'].lower()})
     params.append({'ParameterKey': 'GitHubUser', 'ParameterValue': config['GitHub_User']})
