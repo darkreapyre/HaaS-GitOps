@@ -33,6 +33,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends --allow-downgra
       vim \ 
       wget \ 
       ca-certificates \ 
+      g++-4.8 \
       libcudnn7=${CUDNN_VERSION} \ 
       libnccl2=${NCCL_VERSION} \ 
       libnccl-dev=${NCCL_VERSION} \ 

@@ -17,8 +17,8 @@ ENV EXPERIMENT_NAME=$EXPERIMENT_NAME
 # GitHub Training code and dependecies
 ##########################################################################################  
 COPY code /tmp/code 
-RUN FILE=/tmp/code/setup.py && if [ -f "$FILE" ]; then cd /tmp/code; pip3 install .; fi
-RUN FILE=/tmp/code/requirements.txt && if [ -f "$FILE " ]; then pip3 install -r $FILE; fi
+RUN FILE=/tmp/code/setup.py && if [ -f "$FILE" ]; then cd /tmp/code; pip install .; fi
+RUN FILE=/tmp/code/requirements.txt && if [ -f "$FILE " ]; then cd /tmp/code; pip install -r $FILE; fi
 RUN cp /tmp/code/train.py /train.py 
 
 ENTRYPOINT ["python3", "/launch.py"]
