@@ -1,21 +1,12 @@
 import boto3
-try:
-    import requests #Python3
-except ImportError:
-    from botocore.vendored import requests #Python2
+import requests #Python3
 import logging
 import base64
 import os
 import shutil
 from zipfile import ZipFile
-try:
-    from cStringIO import StringIO #Python2
-except ImportError:
-    from io import BytesIO #Python3
-try:
-    from urlparse import urlparse #Python2
-except ImportError:
-    import urllib.parse as urlparse #Python3
+from io import BytesIO #Python3
+#import urllib.parse as urlparse #Python3
 import base64
 
 # Set to False to allow self-signed/invalid ssl certificates
