@@ -28,26 +28,10 @@ aws s3 cp ./pre-config-template.yaml "s3://${bootstrap_bucket}/templates/" --acl
 cd ../../
 
 echo ""
-echo -n "Packagin Webhook Artifacts ..."
+echo -n "Packaging Webhook Artifacts ..."
 echo ""
 aws cloudformation package --region $region --s3-bucket $bootstrap_bucket --template ./src/webhook/webhook-template.yaml --output-template-file ./staging/webhook-template.yaml
 aws s3 cp ./staging/webhook-template.yaml "s3://${bootstrap_bucket}/templates/" --acl public-read --region $region
-
-# echo ""
-# echo -n "Packaging Front-End Artifacts ..."
-# echo ""
-# aws cloudformation package --region $region --s3-bucket $bootstrap_bucket --template ./src/front-end/front-end-template.yaml --output-template-file ./staging/front-end-template.yaml
-# aws s3 cp ./staging/front-end-template.yaml "s3://${bootstrap_bucket}/templates/" --acl public-read --region $region
-
-# echo ""
-# echo -n "Packaging MlFlow Artifacts ..."
-# echo ""
-# cd ./src/mlflow
-# zip -r ../../staging/mlflow-src.zip Dockerfile
-# aws s3 cp ../../staging/mlflow-src.zip "s3://${bootstrap_bucket}/artifacts/" --acl public-read --region $region
-# aws s3 cp ./mlflow-build-template.yaml "s3://${bootstrap_bucket}/templates/" --acl public-read --region $region
-# aws s3 cp ./mlflow-deployment-template.yaml "s3://${bootstrap_bucket}/templates/" --acl public-read --region $region
-# cd ../../
 
 echo ""
 echo -n "Packaging Build Artifacts ..."
