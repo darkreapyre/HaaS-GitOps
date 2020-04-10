@@ -1,5 +1,5 @@
 {
-    "Model_Name": "Testing GitHub ALL Python3 with Lambda Layers",
+    "Model_Name": "Testing without VPC",
     "Version": "", // single integer
     "Description": "Experiment created on ${DATE} at ${TIME}.",
     "Platform": "sagemaker", // List of sagemaker, dlami, eks (Added by Front-End form)
