@@ -49,27 +49,27 @@ Resources:
         S3BootstrapBucket: !Ref S3BootstrapBucket
         S3ExperimentBucket: !Ref S3ExperimentBucket
 
-  MlFlowBuild:
-    Type: AWS::CloudFormation::Stack
-    Properties:
-      TemplateURL: !Sub https://s3.amazonaws.com/${S3BootstrapBucket}/templates/mlflow-build-template.yaml
-      Parameters:
-        Name: !Ref AWS::StackName
-        S3BootstrapBucket: !Ref S3BootstrapBucket
-        S3ExperimentBucket: !Ref S3ExperimentBucket
-        VpcCIDR: 10.215.0.0/16
-        Subnet1CIDR: 10.215.10.0/24
-        Subnet2CIDR: 10.215.20.0/24
+  # MlFlowBuild:
+  #   Type: AWS::CloudFormation::Stack
+  #   Properties:
+  #     TemplateURL: !Sub https://s3.amazonaws.com/${S3BootstrapBucket}/templates/mlflow-build-template.yaml
+  #     Parameters:
+  #       Name: !Ref AWS::StackName
+  #       S3BootstrapBucket: !Ref S3BootstrapBucket
+  #       S3ExperimentBucket: !Ref S3ExperimentBucket
+  #       VpcCIDR: 10.215.0.0/16
+  #       Subnet1CIDR: 10.215.10.0/24
+  #       Subnet2CIDR: 10.215.20.0/24
 
-  MlFlowDeployment:
-    Type: AWS::CloudFormation::Stack
-    Properties:
-      TemplateURL: !Sub https://s3.amazonaws.com/${S3BootstrapBucket}/templates/mlflow-deployment-template.yaml
-      Parameters:
-        SubnetA: !GetAtt MlFlowBuild.Outputs.Subnet1
-        SubnetB: !GetAtt MlFlowBuild.Outputs.Subnet2
-        VpcId: !GetAtt MlFlowBuild.Outputs.VpcId
-        Image: !GetAtt MlFlowBuild.Outputs.Image
+  # MlFlowDeployment:
+  #   Type: AWS::CloudFormation::Stack
+  #   Properties:
+  #     TemplateURL: !Sub https://s3.amazonaws.com/${S3BootstrapBucket}/templates/mlflow-deployment-template.yaml
+  #     Parameters:
+  #       SubnetA: !GetAtt MlFlowBuild.Outputs.Subnet1
+  #       SubnetB: !GetAtt MlFlowBuild.Outputs.Subnet2
+  #       VpcId: !GetAtt MlFlowBuild.Outputs.VpcId
+  #       Image: !GetAtt MlFlowBuild.Outputs.Image
 
   # FrontEnd:
   #   Type: AWS::CloudFormation::Stack
@@ -114,9 +114,9 @@ Outputs:
   ExperimentBucket:
     Description: S3 Bucekt container ML Experiment data.
     Value: !Ref S3ExperimentBucket
-  MlFlowURL:
-    Description: URL for MlFlow Experiment DashboardURL
-    Value: !GetAtt MlFlowDeployment.Outputs.Endpoint
+  # MlFlowURL:
+  #   Description: URL for MlFlow Experiment DashboardURL
+  #   Value: !GetAtt MlFlowDeployment.Outputs.Endpoint
   WebHookApi:
     Description: GitHub Webhook endpoint.
     Value: !GetAtt Webhook.Outputs.ZipDownloadWebHookApi
