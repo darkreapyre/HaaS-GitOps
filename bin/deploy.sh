@@ -75,7 +75,7 @@ cat > ./staging/experiment.json <<EOF
 {
     "Platform": "sagemaker",
     "Dataset_Name": "fashion",
-    "Training_Instance": "ml.p3.8xlarge",
+    "Training_Instance": "ml.p3.16xlarge",
     "Instance_Count": "1",
     "Hyperparameters": "{'epochs': '40', 'batch-size': '32'}"
 }

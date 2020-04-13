@@ -1,1 +1,1 @@
-# # Scalable Machine Learning Experiments using a Managed MlOps Pipeline (MMP) using GitOps.
+# Scalable Machine Learning Experiments using a Managed MlOps Pipeline (MMP) with GitOps integration
