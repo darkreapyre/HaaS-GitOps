@@ -177,9 +177,8 @@ def train():
     outdir = CONST["model_output_dir"]
     train_data_dir = CONST["train_data_dir"]
     gpus_per_host = os.environ['NUM_GPUS']
-    tracking_uri = os.environ['DASHBOARD_URL']
     dataset = os.environ['DATASET_NAME']
-    experiment_name = os.environ['EXPERIMENT_NAME']
+   experiment_name = os.environ['EXPERIMENT_NAME']
 #    snapshot_path = '/snapshots'
 #    os.mkdir(snapshot_path)
 #    tensorboard_path = outdir+'/tensorboard'
@@ -268,7 +267,7 @@ mpirun -np {numprocesses} \\
 -x PATH \\
 -x LD_PRELOAD={gethostname_ld_preload} \\
 --output-filename {outdir} \\
-/usr/local/bin/python3.6 /train.py {args} --dataset {dataset} --dataset-path {train_data_dir} --output-path {outdir} --tracking-uri {tracking_uri} --experiment-name {experiment_name}"""
+/usr/local/bin/python3.6 /train.py {args} --dataset {dataset} --dataset-path {train_data_dir} --output-path {outdir} --experiment-name {experiment_name}"""
 #/usr/local/bin/python3.6 /train.py --backbone resnet50 --batch-size 1 --epochs 2 --steps 128 --dataset coco --dataset-path /opt/ml/input/data/train --output-path /opt/ml/model --tracking-uri http://test-LoadB-17OBF5I6Y6DZ6-537507686.us-west-2.elb.amazonaws.com --experiment-name retinanet-v0
 #/usr/local/bin/python3.6 /train.py --backbone {backbone} --steps {steps} --epochs {epochs} --batch-size {batch_size} --no-evaluation --snapshot-path {snapshot_path} {dataset} {train_data_dir}"""
 
